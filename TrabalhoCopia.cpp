@@ -1,75 +1,10 @@
 #include <iostream>
 #include <string>
-#include <fstream>
 #include <algorithm>
 #include <random>
 #include <ctime>
 #include <cctype>
-int MenuPrincipal();
-std::string CriarSenha();
-void adicionarSenhaManual();
-void verSenhas();
-int main (){
-    int MenuP = MenuPrincipal();
-    std::string Senha = "";
-    switch (MenuP)
-    {
-    case 1:
-        Senha = CriarSenha();
-        break;
-    case 2:
-        adicionarSenhaManual();
-        break;
-    case 3:
-        verSenhas();
-        break;
-    case 4:
-        return 0;
-        break;
-    default:
-        break;
-    }
-}
-void guardarSenha(const std::string& servico, const std::string& user, const std::string& senha) {
-    std::ofstream ficheiro("senhas.txt", std::ios::app);
-    if(ficheiro.is_open()) {
-        ficheiro << servico << "|" << user << "|" << senha << "\n";
-        ficheiro.close();
-        std::cout << "Senha guardada com sucesso!\n";
-    } else {
-        std::cout << "Erro ao abrir o ficheiro!\n";
-    }
-}
-
-void verSenhas(){
-    std::ifstream ficheiro("senhas.txt");
-    if (!ficheiro.is_open()) {
-        std::cout << "Nenhuma senha guardada.\n";
-        return;
-    }
-
-    std::string linha;
-    std::cout << "\nSenhas guardadas:\n";
-    while (std::getline(ficheiro, linha)) {
-        std::cout << linha << std::endl;  // mostra a linha inteira: serviço|usuario|senha
-    }
-
-    ficheiro.close();
-}
-void adicionarSenhaManual(){
-
-};
-int MenuPrincipal(){
-    int Opcao;
-    std::cout << "Oque deseja fazer?" << std::endl;
-    std::cout << "1 - Criar nova senha" << std::endl;
-    std::cout << "2 - Adicionar senha manualmente" << std::endl;
-    std::cout << "3 - Ver senhas guardadas" << std::endl;
-    std::cout << "4 - Sair" << std::endl;
-    std::cin >> Opcao;
-    return Opcao;
-}
-std::string CriarSenha(){
+int main(){
     std::mt19937 generator(time(nullptr));
     bool LetrasMaiusculas = false;
     bool LetrasMinusculas = false;
@@ -241,24 +176,12 @@ if (LetrasMinusculas) {
     std::shuffle(senha.begin(), senha.end(), generator);
 
     std::cout << "Senha gerada: " << senha << std::endl;
-    char guardar;
-    std::cout << "Deseja guardar a senha? (S/N): ";
-    std::cin >> guardar;
-    if(toupper(guardar) == 'S') {
-    std::string servico, user;
-    std::cout << "Serviço: "; 
-    std::cin >> servico;
-    std::cout << "Usuário/Email: "; 
-    std::cin >> user;
-    guardarSenha(servico, user, senha);
-}
-
     LetrasMaiusculas = false;
     LetrasMinusculas = false;
     LetrasMistas = false;
     Numeros = false;
     Sinais = false;
-    }
+}
     break;
         break;
     default:
@@ -267,5 +190,4 @@ if (LetrasMinusculas) {
         break;
     }
     } while (Menu != 'D');
-    return senha;
 }
