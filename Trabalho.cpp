@@ -7,10 +7,18 @@
 #include <cctype>
 int MenuPrincipal();
 std::string CriarSenha();
+void guardarSenha(const std::string& servico, const std::string& user, const std::string& senha);
 void adicionarSenhaManual();
 void verSenhas();
+std::string encriptar(const std::string& texto);
+std::string desencriptar(const std::string& texto) ;
 int main (){
-    int MenuP = MenuPrincipal();
+    //Menu Principal
+    int MenuP;
+    do
+    {
+    MenuP = MenuPrincipal();
+    //Variavel para guardar a senha criada e limpa
     std::string Senha = "";
     switch (MenuP)
     {
@@ -29,20 +37,40 @@ int main (){
     default:
         break;
     }
+} while (MenuP != 4);
 }
+std::string encriptar(const std::string& texto) {
+    std::string resultado = texto;
+    char chave = 'K';
+
+    for (char &c : resultado) {
+        c ^= chave;
+    }
+    return resultado;
+}
+std::string desencriptar(const std::string& texto) {
+    std::string resultado = texto;
+    char chave = 'K';
+
+    for (char &c : resultado) {
+        c ^= chave;
+    }
+    return resultado;
+}
+//Função para guardar a senha num ficheiro de texto
 void guardarSenha(const std::string& servico, const std::string& user, const std::string& senha) {
     std::ofstream ficheiro("senhas.txt", std::ios::app);
     if(ficheiro.is_open()) {
-        ficheiro << servico << "|" << user << "|" << senha << "\n";
+        ficheiro << encriptar(servico) << encriptar(" | ") << encriptar(user) << encriptar(" | ") << encriptar(senha) << std::endl;
         ficheiro.close();
-        std::cout << "Senha guardada com sucesso!\n";
+        std::cout << "Senha guardada com sucesso!" << std::endl;
     } else {
-        std::cout << "Erro ao abrir o ficheiro!\n";
+        std::cout << "Erro ao abrir o ficheiro!" << std::endl;
     }
 }
-
+//Função para ver as senhas guardadas
 void verSenhas(){
-    std::ifstream ficheiro("senhas.txt");
+std::ifstream ficheiro("senhas.txt");
     if (!ficheiro.is_open()) {
         std::cout << "Nenhuma senha guardada.\n";
         return;
@@ -50,15 +78,30 @@ void verSenhas(){
 
     std::string linha;
     std::cout << "\nSenhas guardadas:\n";
+
     while (std::getline(ficheiro, linha)) {
-        std::cout << linha << std::endl;  // mostra a linha inteira: serviço|usuario|senha
+        std::string limpa = desencriptar(linha);
+        std::cout << limpa << std::endl;
     }
 
     ficheiro.close();
 }
+//Função para adicionar senha manualmente
 void adicionarSenhaManual(){
+    std::string servico, user, senha;
 
-};
+    std::cout << "Serviço: ";
+    std::cin >> servico;
+
+    std::cout << "Utilizador/Email: ";
+    std::cin >> user;
+
+    std::cout << "Senha: ";
+    std::cin >> senha;
+
+    guardarSenha(servico, user, senha);
+}
+//Função do Menu Principal
 int MenuPrincipal(){
     int Opcao;
     std::cout << "Oque deseja fazer?" << std::endl;
@@ -69,6 +112,7 @@ int MenuPrincipal(){
     std::cin >> Opcao;
     return Opcao;
 }
+//Função para criar a senha
 std::string CriarSenha(){
     std::mt19937 generator(time(nullptr));
     bool LetrasMaiusculas = false;
@@ -76,7 +120,7 @@ std::string CriarSenha(){
     bool LetrasMistas = false;
     bool Numeros = false;
     bool Sinais = false;
-    bool Verificar = true;
+    bool Verificar = false;
     char Menu;
     char Escolha;
     char Letras;
@@ -156,7 +200,8 @@ std::string CriarSenha(){
     {
         std::cout << "Sinais" << std::endl;
     }
-    do
+    Escolha = ' ';
+    while (Escolha != 'S' && Escolha != 'N')
     {
     Escolha = ' ';
     std::cout << "Deseja escolher outro ou retirar(S/N)?";
@@ -173,7 +218,7 @@ std::string CriarSenha(){
         std::cout << "Letra invalida insira novamente!" << std::endl;
         break;
     }
-    } while (Escolha != 'S' && Escolha != 'N');
+    }
     std::string senha = "";
     std::string base  = "";
 
@@ -214,10 +259,9 @@ if (LetrasMinusculas) {
         std::cout << "Nenhum tipo de caractere selecionado!" << std::endl;
         break;
     }
-    do
+    while (!Verificar)
     {
-    
-    carac = ' ';
+    carac = 0;
     Verificar = false;
     std::cout << "Quantos caracteres deseja que tenha a sua senha? ";
     std::cin >> carac;
@@ -230,8 +274,10 @@ if (LetrasMinusculas) {
     {
         std::cout << "A senha deve ser menor!" << std::endl;
         Verificar = false;
+    }else{
+        Verificar = true;
     }
-    } while (!Verificar);
+    } 
     
     while (senha.length() < carac) {
         std::shuffle(base.begin(), base.end(), generator);
@@ -267,5 +313,4 @@ if (LetrasMinusculas) {
         break;
     }
     } while (Menu != 'D');
-    return senha;
 }
