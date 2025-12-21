@@ -1,18 +1,29 @@
 #include <iostream>
+//cstdio para usar a função remove
+#include <cstdio>
+//string para usar strings
 #include <string>
+//fstream para ler e escrever em ficheiros
 #include <fstream>
+//algorithm para usar a função shuffle
 #include <algorithm>
+//random para gerar numeros aleatorios
 #include <random>
+//ctime para inicializar o gerador de numeros aleatorios
 #include <ctime>
+//cctype para usar toupper
 #include <cctype>
 int MenuPrincipal();
+bool verificarPasswordMestre();
+bool existePasswordMestre();
+void criarPasswordMestre();
 void CriarSenha();
 void guardarSenha(const std::string& servico, const std::string& user, const std::string& senha);
 void adicionarSenhaManual();
 void verSenhas();
 std::string encriptar(const std::string& texto);
-std::string desencriptar(const std::string& texto) ;
-bool AdicionarTirarCaracteres()
+std::string desencriptar(const std::string& texto);
+bool AdicionarTirarCaracteres();
 int main (){
     //Verificar se existe password mestre
     if (!existePasswordMestre()) {
@@ -92,6 +103,8 @@ bool verificarPasswordMestre() {
     // Lê a password mestre encriptada do ficheiro
     int tentativas = 1;
     std::ifstream ficheiro("master.txt");
+    std::ifstream senhas("senhas.txt");
+    std::ifstream master("master.txt");
     std::string guardadaEncriptada;
     std::string inserida;
     std::getline(ficheiro, guardadaEncriptada);
@@ -117,16 +130,27 @@ bool verificarPasswordMestre() {
         {
             std::cout << "Numero maximo de tentativas atingido!" << std::endl;
             std::cout << "A apagar todos os dados..." << std::endl;
-            master.txt.clear();
-            senhas.txt.clear();
-            std::cout << "Dados apagados com sucesso!" << std::endl;
+            //Apagar os ficheiros de senhas e master
+            master.close();
+            senhas.close();
+            if (remove("master.txt") == 0)
+            std::cout << "Ficheiro master apagado com sucesso!" << std::endl;
+            else{
+            std::cout << "Erro ao apagar ficheiro!" << std::endl;
+            }
+            if (remove("senhas.txt") == 0){
+            std::cout << "Ficheiro senhas apagado com sucesso!" << std::endl;
+            }
+            else{
+            std::cout << "Erro ao apagar ficheiro!" << std::endl;
+            }
             return false;
         }
         tentativas++;
     }
     } while (inserida != guardada || tentativas < 3);
 }
-//Função para encriptar e desencriptar texto
+//Função para encriptar e desencriptar texto(são iguais)
 std::string encriptar(const std::string& texto) {
     std::string resultado = texto;
     char chave = 'R';
@@ -206,10 +230,11 @@ void CriarSenha(){
     bool Numeros = false;
     bool Sinais = false;
     bool Verificarn = false;
+    bool Verificar = false;
+    char guardar;
     char Menu;
     char Escolha;
     char Letras;
-    bool Verificar = false;
     int carac;
     //Menu de seleção dos tipos de caracteres
     do{ 
@@ -378,7 +403,7 @@ if (LetrasMinusculas) {
         break;
     }
     //Perguntar o tamanho da senha
-    while (!Verificar)
+    while (!Verificarn)
     {
     carac = 0;
     Verificar = false;
@@ -410,7 +435,6 @@ if (LetrasMinusculas) {
     std::shuffle(senha.begin(), senha.end(), generator);
     //Mostrar a senha gerada
     std::cout << "Senha gerada: " << senha << std::endl;
-    char guardar;
     std::cout << "Deseja guardar a senha? (S/N): ";
     std::cin >> guardar;
     guardar = toupper(guardar);
@@ -421,6 +445,7 @@ if (LetrasMinusculas) {
     std::cout << "Usuário/Email: "; 
     std::cin >> user;
     guardarSenha(servico, user, senha);
+    break;
 }else{
     do
     {
@@ -443,7 +468,6 @@ if (LetrasMinusculas) {
         break;
     }
     } while (guardar != 'N');
-    guardar = ' ';
 }
 } while (guardar != 'N');
     //Resetar as variaveis para nova criação de senha
