@@ -413,15 +413,15 @@ void CriarSenha(){
     senha += Maiusculas[0];
     senha += Minusculas[0];
     base  += Maiusculas + Minusculas;
-}
-if (LetrasMaiusculas) {
-    senha += Maiusculas[0];
-    base  += Maiusculas;
-}
-if (LetrasMinusculas) {
-    senha += Minusculas[0];
-    base  += Minusculas;
-}
+    }
+    if (LetrasMaiusculas) {
+        senha += Maiusculas[0];
+        base  += Maiusculas;
+    }
+    if (LetrasMinusculas) {
+        senha += Minusculas[0];
+        base  += Minusculas;
+    }
     if (Numeros) {
         senha += num[0];
         base  += num;
