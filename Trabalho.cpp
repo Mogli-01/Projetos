@@ -1,4 +1,6 @@
 #include <iostream>
+//cstdlib para usar system("cls")
+#include <cstdlib>
 //cstdio para usar a função remove
 #include <cstdio>
 //string para usar strings
@@ -24,6 +26,7 @@ void verSenhas();
 std::string encriptar(const std::string& texto);
 std::string desencriptar(const std::string& texto);
 bool AdicionarTirarCaracteres();
+void LimparTela();
 int main (){
     //Verificar se existe password mestre
     if (!existePasswordMestre()) {
@@ -59,6 +62,10 @@ int main (){
     }
 } while (MenuP != 4);
 }
+void LimparTela(){
+    //Limpar a tela
+    system("cls");
+}
 //Função para adicionar ou retirar caracteres
 bool AdicionarTirarCaracteres(){
     std::cout << "Deseja adicionar ou retirar o caractere? (A/T): ";
@@ -82,6 +89,8 @@ void criarPasswordMestre() {
     std::cin >> pass2;
     // Verifica se as passwords coincidem
     if (pass1 != pass2) {
+        //Limpar a tela
+        LimparTela();
         std::cout << "As passwords nao coincidem!" << std::endl;
         std::cout << "Tente novamente." <<std::endl;
     }
@@ -119,15 +128,21 @@ bool verificarPasswordMestre() {
     if (inserida == guardada) {
         return true;
     } else {
+        //Limpar a tela
+        LimparTela();
         std::cout << "Password incorreta!" << std::endl;
         std::cout << "Tentativa " << tentativas << " de 3." << std::endl;
         if (tentativas == 2)
         {
+            //Limpar a tela
+            LimparTela();
             std::cout << "Ultima tentativa!" << std::endl;
             std::cout << "Se errar a ultima vez os dados serao perdidos!" << std::endl;
         }
         if (tentativas == 3)
         {
+            //Limpar a tela
+            LimparTela();
             std::cout << "Numero maximo de tentativas atingido!" << std::endl;
             std::cout << "A apagar todos os dados..." << std::endl;
             //Apagar os ficheiros de senhas e master
@@ -200,6 +215,8 @@ std::ifstream ficheiro("senhas.txt");
 }
 //Função para adicionar senha manualmente
 void adicionarSenhaManual(){
+    //Limpar a tela
+    LimparTela();
     std::string servico, user, senha;
     std::cout << "Serviço: ";
     std::cin >> servico;
@@ -212,6 +229,9 @@ void adicionarSenhaManual(){
 //Função do Menu Principal
 int MenuPrincipal(){
     int Opcao;
+    //Limpar a tela
+    LimparTela();
+    std::cout << "-----Gestor de Senhas-----" << std::endl;
     std::cout << "Oque deseja fazer?" << std::endl;
     std::cout << "1 - Criar nova senha" << std::endl;
     std::cout << "2 - Adicionar senha manualmente" << std::endl;
@@ -240,6 +260,8 @@ void CriarSenha(){
     do{ 
     Men:
     Menu = ' ';
+    //Limpar a tela
+    LimparTela();
     std::cout << "-----Criador de Palavras Passes-----" << std::endl;
     std::cout << "A - Letras" << std::endl;
     std::cout << "B - Numeros" << std::endl;
@@ -252,6 +274,8 @@ void CriarSenha(){
     switch (Menu)
     {
     case 'A':
+        //Limpar a tela
+        LimparTela();
         //Submenu para selecionar o tipo de letras
         std::cout << "-----Letras-----" << std::endl;
         std::cout << "A - Maiusculas" << std::endl;
@@ -303,6 +327,9 @@ void CriarSenha(){
         }
         break;
     case 'B':
+        //Limpar a tela
+        LimparTela();
+        std::cout << "-----Numeros-----" << std::endl;
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
             Numeros = true;
@@ -311,6 +338,9 @@ void CriarSenha(){
         }
         break;
     case 'C':
+        //Limpar a tela
+        LimparTela();
+        std::cout << "-----Sinais-----" << std::endl;
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
             Sinais = true;
@@ -320,6 +350,8 @@ void CriarSenha(){
         break;
     case 'D': 
     {
+    //Limpar a tela
+    LimparTela();
     std::string Maiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     std::string Minusculas = "abcdefghijklmnopqrstuvwxyz";
     std::string num  = "0123456789";
@@ -362,6 +394,8 @@ void CriarSenha(){
     case 'N':
         break;
     default:
+        //Limpar a tela
+        LimparTela();
         std::cout << "Letra invalida insira novamente!" << std::endl;
         break;
     }
@@ -400,6 +434,7 @@ if (LetrasMinusculas) {
     if (base.empty()) {
         std::cout << "Erro!" << std::endl;
         std::cout << "Nenhum tipo de caractere selecionado!" << std::endl;
+        //Voltar ao menu
         break;
     }
     //Perguntar o tamanho da senha
@@ -407,6 +442,9 @@ if (LetrasMinusculas) {
     {
     carac = 0;
     Verificar = false;
+    //Limpar a tela
+    LimparTela();
+    //Perguntar o tamanho da senha
     std::cout << "Quantos caracteres deseja que tenha a sua senha? ";
     std::cin >> carac;
     //Verificar o tamanho da senha
@@ -433,6 +471,8 @@ if (LetrasMinusculas) {
     }
     //Embaralhar a senha final
     std::shuffle(senha.begin(), senha.end(), generator);
+    //Limpar a tela
+    LimparTela();
     //Mostrar a senha gerada
     std::cout << "Senha gerada: " << senha << std::endl;
     std::cout << "Deseja guardar a senha? (S/N): ";
@@ -451,6 +491,8 @@ if (LetrasMinusculas) {
     {
     
     guardar = ' ';
+    //Limpar a tela
+    LimparTela();
     std::cout << "Senha não guardada." << std::endl;
     std::cout << "Gerar nova senha?" << std::endl;
     std::cin >> guardar;
@@ -463,6 +505,8 @@ if (LetrasMinusculas) {
         return;
         break;
     default:
+        //Limpar a tela
+        LimparTela();
         std::cout << "Letra incorreta!" << std::endl;
         std::cout << "Insira uma letra diferente" << std::endl;
         break;
@@ -480,6 +524,8 @@ if (LetrasMinusculas) {
     break;
         break;
     default:
+        //Limpar a tela
+        LimparTela();
         std::cout << "Letra incorreta!" << std::endl;
         std::cout << "Insira uma letra diferente" << std::endl;
         break;
