@@ -517,7 +517,6 @@ void CriarSenha(){
 }else{
     do
     {
-    
     guardar = ' ';
     //Limpar a tela
     LimparTela();
