@@ -198,8 +198,9 @@ void guardarSenha(const std::string& servico, const std::string& user, const std
     }
 }
 //Função para ver as senhas guardadas
-void verSenhas(){
-std::ifstream ficheiro("senhas.txt");
+void verSenhas(){ 
+    LimparTela();
+    std::ifstream ficheiro("senhas.txt");
     if (!ficheiro.is_open()) {
         std::cout << "Nenhuma senha guardada." << std::endl;
         return;
@@ -212,6 +213,11 @@ std::ifstream ficheiro("senhas.txt");
         std::cout << limpa << std::endl;
     }
     ficheiro.close();
+    std::cout << "Pressione 'Enter' para voltar ao menu...";
+    //Limpa o cin
+    std::cin.ignore();
+    //Espera receber o enter para continuar
+    std::cin.get();
 }
 //Função para adicionar senha manualmente
 void adicionarSenhaManual(){
@@ -219,7 +225,8 @@ void adicionarSenhaManual(){
     LimparTela();
     std::string servico, user, senha;
     std::cout << "Serviço: ";
-    std::cin >> servico;
+    std::cin.ignore();
+    std::getline(std::cin, servico);
     std::cout << "Utilizador/Email: ";
     std::cin >> user;
     std::cout << "Senha: ";
@@ -287,39 +294,51 @@ void CriarSenha(){
         switch (Letras)
         {
         case 'A':
+        //Ve se as letras maiusculas ja foram postas
+        if(LetrasMaiusculas = true){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-                LetrasMaiusculas = true;
-                LetrasMinusculas = false;
-                LetrasMistas = false;
             } else {
                 LetrasMaiusculas = false;
+                LetrasMinusculas = false;
+                LetrasMistas = false;
+            }}
+            else{
+                LetrasMaiusculas = true;
                 LetrasMinusculas = false;
                 LetrasMistas = false;
             }
             break;
         case 'B':
+        //Ve se as letras minusculas ja foram postas
+        if(LetrasMinusculas = true){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-                LetrasMaiusculas = false;
-                LetrasMinusculas = true;
-                LetrasMistas = false;
             } else {
                 LetrasMaiusculas = false;
                 LetrasMinusculas = false;
+                LetrasMistas = false;
+            }}
+            else{
+                LetrasMaiusculas = false;
+                LetrasMinusculas = true;
                 LetrasMistas = false;
             }
             break;
         case 'C':
+        //Ve se as letras mistas ja foram postas
+        if(LetrasMistas = true){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-                LetrasMaiusculas = false;
-                LetrasMinusculas = false;
-                LetrasMistas = true;
             } else {
                 LetrasMaiusculas = false;
                 LetrasMinusculas = false;
                 LetrasMistas = false;
+            }}
+            else{
+                LetrasMaiusculas = false;
+                LetrasMinusculas = false;
+                LetrasMistas = true;
             }
             break;
         default:
@@ -330,22 +349,30 @@ void CriarSenha(){
         //Limpar a tela
         LimparTela();
         std::cout << "-----Numeros-----" << std::endl;
+        //Ve se os numeros ja foram postos
+        if (Numeros = true){
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
-            Numeros = true;
         } else {
             Numeros = false;
+        }}
+        else{
+            Numeros = true;
         }
         break;
     case 'C':
         //Limpar a tela
         LimparTela();
         std::cout << "-----Sinais-----" << std::endl;
+        //Ve se os Sinais ja foram postos
+        if(Sinais = true){
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
-            Sinais = true;
         } else {
             Sinais = false;
+        }}
+        else{
+            Sinais = true;
         }
         break;
     case 'D': 
@@ -481,7 +508,8 @@ if (LetrasMinusculas) {
     if(guardar == 'S') {
     std::string servico, user;
     std::cout << "Serviço: "; 
-    std::cin >> servico;
+    std::cin.ignore();
+    std::getline(std::cin, servico);
     std::cout << "Usuário/Email: "; 
     std::cin >> user;
     guardarSenha(servico, user, senha);
