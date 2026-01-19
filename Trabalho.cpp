@@ -68,11 +68,11 @@ void LimparTela(){
 }
 //Função para adicionar ou retirar caracteres
 bool AdicionarTirarCaracteres(){
-    std::cout << "Deseja adicionar ou retirar o caractere? (A/T): ";
+    std::cout << "Deseja retirar o caractere? (S/N): ";
     char opcao;
     std::cin >> opcao;
     opcao = toupper(opcao);
-    if(opcao == 'A') {
+    if(opcao == 'S') {
         return true;
     } else {
         return false;
@@ -295,10 +295,9 @@ void CriarSenha(){
         {
         case 'A':
         //Ve se as letras maiusculas ja foram postas
-        if(LetrasMaiusculas = true){
+        if(LetrasMaiusculas){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-            } else {
                 LetrasMaiusculas = false;
                 LetrasMinusculas = false;
                 LetrasMistas = false;
@@ -311,10 +310,9 @@ void CriarSenha(){
             break;
         case 'B':
         //Ve se as letras minusculas ja foram postas
-        if(LetrasMinusculas = true){
+        if(LetrasMinusculas){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-            } else {
                 LetrasMaiusculas = false;
                 LetrasMinusculas = false;
                 LetrasMistas = false;
@@ -327,10 +325,9 @@ void CriarSenha(){
             break;
         case 'C':
         //Ve se as letras mistas ja foram postas
-        if(LetrasMistas = true){
+        if(LetrasMistas){
             Verificar = AdicionarTirarCaracteres();
             if(Verificar) {
-            } else {
                 LetrasMaiusculas = false;
                 LetrasMinusculas = false;
                 LetrasMistas = false;
@@ -350,10 +347,9 @@ void CriarSenha(){
         LimparTela();
         std::cout << "-----Numeros-----" << std::endl;
         //Ve se os numeros ja foram postos
-        if (Numeros = true){
+        if (Numeros){
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
-        } else {
             Numeros = false;
         }}
         else{
@@ -365,17 +361,16 @@ void CriarSenha(){
         LimparTela();
         std::cout << "-----Sinais-----" << std::endl;
         //Ve se os Sinais ja foram postos
-        if(Sinais = true){
+        if(Sinais){
         Verificar = AdicionarTirarCaracteres();
         if(Verificar) {
-        } else {
             Sinais = false;
         }}
         else{
             Sinais = true;
         }
         break;
-    case 'D': 
+    case 'D':
     {
     //Limpar a tela
     LimparTela();
@@ -514,7 +509,7 @@ void CriarSenha(){
     std::cin >> user;
     guardarSenha(servico, user, senha);
     break;
-}else{
+    }else{
     do
     {
     guardar = ' ';
