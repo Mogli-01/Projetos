@@ -54,6 +54,11 @@ int main (){
         verSenhas();
         break;
     case 4:
+        std::cout << "        ^__^" << std::endl;
+        std::cout << "        (oo)\\_______" << std::endl;
+        std::cout << "        (__)\\       )\\/\\" << std::endl;
+        std::cout << "            ||----w |" << std::endl;
+        std::cout << "            ||     ||" << std::endl;
         std::cout << "A sair..." << std::endl;
         return 0;
         break;
