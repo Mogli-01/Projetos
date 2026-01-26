@@ -427,10 +427,12 @@ void CriarSenha(){
         break;
     }
     }
+    do{
     //Variaveis para criar a senha
     std::string senha = "";
     std::string base  = "";
     //Embaralhar os caracteres
+    senha.clear();
     std::shuffle(Maiusculas.begin(), Maiusculas.end(), generator);
     std::shuffle(Minusculas.begin(), Minusculas.end(), generator);
     std::shuffle(num.begin(), num.end(), generator);
@@ -490,7 +492,6 @@ void CriarSenha(){
     } 
     do
     {
-    senha.clear();
     //Completar a senha até o tamanho desejado
     while (senha.length() < carac) {
         std::shuffle(base.begin(), base.end(), generator);
@@ -515,13 +516,11 @@ void CriarSenha(){
     guardarSenha(servico, user, senha);
     break;
     }else{
-    do
-    {
     guardar = ' ';
     //Limpar a tela
     LimparTela();
     std::cout << "Senha não guardada." << std::endl;
-    std::cout << "Gerar nova senha?" << std::endl;
+    std::cout << "Gerar nova senha? ";
     std::cin >> guardar;
     guardar = toupper(guardar);
     switch (guardar)
@@ -538,8 +537,8 @@ void CriarSenha(){
         std::cout << "Insira uma letra diferente" << std::endl;
         break;
     }
-    } while (guardar != 'N');
-}
+    }
+}while (guardar != 'N');
 } while (guardar != 'N');
     //Resetar as variaveis para nova criação de senha
     LetrasMaiusculas = false;
